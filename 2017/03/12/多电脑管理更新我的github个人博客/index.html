@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    
+    
+    
+    <title>多电脑管理更新我的github个人博客 | 有趣 | -for notes and fun</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="技术">
+    <meta name="description" content="昨天跟着Mungo的博文实现多电脑终端管理我的github pages博客的时候，边做边记录下来了我遇到的一些问题和解决方案。结果在atom上写的时候忘记save了。直接关掉了atom发现刚刚写的markdown文档大小为0kb。我苍了个天！以后写文档一定定时save！ MD!
+1. 前言用Hexo+github搭建了自己的个人博客以后，有时候需要在多台电脑上更新自己的博客。这里的解决方案是：把g">
+<meta property="og:type" content="article">
+<meta property="og:title" content="多电脑管理更新我的github个人博客">
+<meta property="og:url" content="https://aliaosha.github.io/2017/03/12/多电脑管理更新我的github个人博客/index.html">
+<meta property="og:site_name" content="有趣">
+<meta property="og:description" content="昨天跟着Mungo的博文实现多电脑终端管理我的github pages博客的时候，边做边记录下来了我遇到的一些问题和解决方案。结果在atom上写的时候忘记save了。直接关掉了atom发现刚刚写的markdown文档大小为0kb。我苍了个天！以后写文档一定定时save！ MD!
+1. 前言用Hexo+github搭建了自己的个人博客以后，有时候需要在多台电脑上更新自己的博客。这里的解决方案是：把g">
+<meta property="og:updated_time" content="2017-03-12T04:12:53.502Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="多电脑管理更新我的github个人博客">
+<meta name="twitter:description" content="昨天跟着Mungo的博文实现多电脑终端管理我的github pages博客的时候，边做边记录下来了我遇到的一些问题和解决方案。结果在atom上写的时候忘记save了。直接关掉了atom发现刚刚写的markdown文档大小为0kb。我苍了个天！以后写文档一定定时save！ MD!
+1. 前言用Hexo+github搭建了自己的个人博客以后，有时候需要在多台电脑上更新自己的博客。这里的解决方案是：把g">
+    
+        <link rel="alternative" href="/atom.xml" title="有趣" type="application/atom+xml">
+    
+    <link rel="shortcut icon" href="/img/my_avatar.jgp">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.10">
+    <script>window.lazyScripts=[]</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/touxiang.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Kevin Zhou</h5>
+          <a href="mailto:1360710851@qq.com" title="1360710851@qq.com" class="mail">1360710851@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/ALiaoSha" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/ysweb" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">多电脑管理更新我的github个人博客</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">多电脑管理更新我的github个人博客</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-03-12T02:08:29.000Z" itemprop="datePublished" class="page-time">
+  2017-03-12
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#1-前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">1. 前言</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#在A电脑中从本地上传Hexo博客源码到Github仓库"><span class="post-toc-number">2.</span> <span class="post-toc-text">在A电脑中从本地上传Hexo博客源码到Github仓库</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-初始化仓库"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">1.初始化仓库</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-把本地文件同步到Github上面"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">2.把本地文件同步到Github上面</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#在B电脑中从Github仓库取回Hexo到本地"><span class="post-toc-number">3.</span> <span class="post-toc-text">在B电脑中从Github仓库取回Hexo到本地</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-把myblog仓库里的文件取回B电脑本地"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">1.把myblog仓库里的文件取回B电脑本地</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-配置新的Hexo"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">3.配置新的Hexo</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-多电脑管理更新我的github个人博客"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">多电脑管理更新我的github个人博客</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017年03月12日 10:08" datetime="2017-03-12T02:08:29.000Z"  itemprop="datePublished">2017-03-12</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>昨天跟着<a href="http://mungo.space/2015/10/14/create-hexo-on-github-4/" target="_blank" rel="external">Mungo</a>的博文实现多电脑终端管理我的github pages博客的时候，边做边记录下来了我遇到的一些问题和解决方案。结果在atom上写的时候忘记save了。直接关掉了atom发现刚刚写的markdown文档大小为0kb。我苍了个天！<br>以后写文档一定定时save！ MD!</p>
+<h1 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h1><p>用Hexo+github搭建了自己的个人博客以后，有时候需要在多台电脑上更新自己的博客。这里的解决方案是：把github当做hexo博客源代码的云端备份。想在哪台电脑上更新博客的时候直接在github上面拉取源代码下来编辑以后就可以把更新的博客deploy到github服务器。然后把更新的源代码也push到你放hexo博客源代码的repo上去。</p>
+<pre><code>Notes：A电脑表示我最开始搭建hexo博客的电脑，  B电脑是我想在上面对博客进行更新的另外一台电脑。
+</code></pre><h1 id="在A电脑中从本地上传Hexo博客源码到Github仓库"><a href="#在A电脑中从本地上传Hexo博客源码到Github仓库" class="headerlink" title="在A电脑中从本地上传Hexo博客源码到Github仓库"></a>在A电脑中从本地上传Hexo博客源码到Github仓库</h1><p>首先在你的github上面新建一个repository，用来存放你的hexo博客源码。<br>我新建的命名myblog。<br>注意：新建repo的时候不要加README.md文件，不然待会push A电脑上的本地代码上去的时候会有 <code>refusing to merge unrelated histories</code>的报错。</p>
+<h2 id="1-初始化仓库"><a href="#1-初始化仓库" class="headerlink" title="1.初始化仓库"></a>1.初始化仓库</h2><p>在Hexo博客的目录下运行Git Bash并输入以下命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$git init</div><div class="line">$git remote add origin &lt;server address&gt;</div></pre></td></tr></table></figure></p>
+<p>这里<server address="">指的是在线仓库的地址，比如在这里我的就应该是<code>https://github.com/ALiaoSha/myblog.git</code>，如果你用其它git仓库服务，填写对应仓库地址即可。<br>origin是本地分支,remote add会将本地仓库映射到Github仓库。</server></p>
+<h2 id="2-把本地文件同步到Github上面"><a href="#2-把本地文件同步到Github上面" class="headerlink" title="2.把本地文件同步到Github上面"></a>2.把本地文件同步到Github上面</h2><p>分别输入执行以下命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ git add .                      #添加所有目录，注意add后面有个点`.`</div><div class="line">$ git commit -m &quot;add to Github&quot;  #添加提交说明，每次提交都需要</div><div class="line">$ git push -u origin master      #把更新推送到云端</div></pre></td></tr></table></figure></p>
+<p>这时可以登录Github账户查看刚创建的myblog仓库中是否上传成功。</p>
+<p>注意:<br>为了在另一台电脑上配置更加方便，严重建议把Hexo博客目录下_config.yml文件复制粘贴一份，并重命名为hexo_config.yml；把themes目录下你用到主题目录下的_config.yml文件也复制一份，并粘贴到博客根目录，注意，是’博客根目录’，并命名为theme_config.yml。原因是我们push代码的时候，我们自己安装的themes是从别人的github上clone下来的。也就是说你的一个git项目中又包含了一个git项目。那么被包含的那个项目是untracked的，被包含的主题目录并不能上传，所以我们需要把这两个配置文件都保存下来在进行同步工作。</p>
+<h1 id="在B电脑中从Github仓库取回Hexo到本地"><a href="#在B电脑中从Github仓库取回Hexo到本地" class="headerlink" title="在B电脑中从Github仓库取回Hexo到本地"></a>在B电脑中从Github仓库取回Hexo到本地</h1><p>如果你的第二台电脑是没有安装运行hexo所需要的环境的话，第一步先要把环境搭起来：安装好Git和Node.js</p>
+<h2 id="1-把myblog仓库里的文件取回B电脑本地"><a href="#1-把myblog仓库里的文件取回B电脑本地" class="headerlink" title="1.把myblog仓库里的文件取回B电脑本地"></a>1.把myblog仓库里的文件取回B电脑本地</h2><p>安装环境完成后，在新文件夹下运行Git Bash并分别执行以下几条命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ git init</div><div class="line">$ git remote add origin &lt;myblog address&gt;  # 关联github上的myblog仓库</div><div class="line">$ git fetch –all                          # 取回源代码</div><div class="line">$ git merge origin/master                 # 与本地分支合并</div></pre></td></tr></table></figure></p>
+<p>这里<myblog address="">是你刚才新建的Giuhub上myblog仓库的地址。fetch是将仓库中的内容取出来。reset则是不做任何合并（merge）处理，直接把取出的内容保存。<br>运行完merge命令后你会发现文件夹中才会出现刚刚上传的内容。</myblog></p>
+<h2 id="3-配置新的Hexo"><a href="#3-配置新的Hexo" class="headerlink" title="3.配置新的Hexo"></a>3.配置新的Hexo</h2><p>如果是新PC，不要忘记我们本机并没有安装Hexo博客<br>执行下面的指令在B电脑上安装hexo<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ npm install hexo --save</div><div class="line">$ hexo init</div><div class="line">$ npm intall</div></pre></td></tr></table></figure></p>
+<pre><code>Notes: 在B电脑上安装hexo的时候就不需要像在A电脑上面那样要先执行 `$ npm install -g hexo-cli`了
+</code></pre><p>3.记得在第一篇中讲过，新安装的Hexo是没有hexo-deployer-git依赖包的，需要手动安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ npm install hexo-deployer-git --save   # 自动部署依赖包</div><div class="line">$ npm install hexo-math --save           # mathjax渲染依赖包</div></pre></td></tr></table></figure></p>
+<p>5.安装主题，我在上文中提到新安装的主题并不能被上传，所以也需要重新手动安装(以NexT主题为例)</p>
+<p>$ git clone <a href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="external">https://github.com/iissnan/hexo-theme-next</a> themes/next<br>这里要注意的是： themes/next 是主题保存目录。</p>
+<p>6.我们之前备份的两个配置文件hexo_config.yml和theme_config.yml有用了,hexo_config.yml重命名为_config.yml覆盖根目录下的同名文件，而theme_config.yml也重命名为<em>config.yml覆盖主题目录下的config.yml文件。注意文件名前面的下划线’</em>’。</p>
+<p>7.输入命令$ hexo generate和命令$ hexo server，然后在浏览器输入localhost:4000中进行预览。如果没有问题那么我们在B电脑上就配置成功了。</p>
+<p>在B电脑上更新博客<br>现在在B电脑上也可以像在A电脑上一样更新博客了，同样是$ hexo new post “my_new_post”<br>编辑完文章，然后执行$ hexo generate和$ hexo deploy就可以成功发表了。<br>这里$ hexo deploy命令是将我们的博客文章发表到我们的Github上的Hexo博客，并不是前文新建的blog仓库，新建的blog仓库用来保存我们的Hexo程序。</p>
+<p>把B电脑上的Hexo从本地同步到Github仓库<br>当发表完文章，我们还需要把Hexo程序同步到我们Github的blog仓库。执行下面指令：</p>
+<p>$ git add .<br>这时候可以输入命令$ git status查看状态，回显示刚才编辑过的文件的信息。</p>
+<p>之后分别输入下面指令完成上传：</p>
+<p>$ git commit -m “commit from PC_B”<br>$ git push -u origin master<br>成功后，我们再次把程序同步更新到了我们的Github仓库blog。<br>如果再想用A电脑更新我们的博客，只需要在执行添加文章之前先把程序从blog仓库拉取下来便可。输入命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git pull https://github.com/Gitzhaoyang/blog.git</div></pre></td></tr></table></figure></p>
+<p>即可完成。</p>
+<p>注意:<br>我们每次更新博客时，为了保持我们每次用到的程序都是最新的。</p>
+<p>每次更新博客之前都需要执行$ git pull <a href="https://github.com/xxxx/xxx.git保持本地最新；" target="_blank" rel="external">https://github.com/xxxx/xxx.git保持本地最新；</a></p>
+<p>每次更新博客之后都需要执行$ git add .,$ git commit -m “message”,$ git push -u origin master以保持Github仓库程序最新。</p>
+<p>好了，现在我们就能实现在不同电脑都能对我们的Hexo博客进行维护了。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2017-03-12T04:12:53.502Z" itemprop="dateUpdated">2017年3月12日 12:12</time>
+</span><br>
+
+
+        这里写留言或版权声明：<a href="/2017/03/12/多电脑管理更新我的github个人博客/" target="_blank" rel="external">https://aliaosha.github.io/2017/03/12/多电脑管理更新我的github个人博客/</a>
+    </div>
+    <footer>
+        <a href="https://aliaosha.github.io">
+            <img src="/img/touxiang.png" alt="Kevin Zhou">
+            Kevin Zhou
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术/">技术</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://aliaosha.github.io/2017/03/12/多电脑管理更新我的github个人博客/&title=《多电脑管理更新我的github个人博客》 — 有趣&pic=https://aliaosha.github.io/img/touxiang.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://aliaosha.github.io/2017/03/12/多电脑管理更新我的github个人博客/&title=《多电脑管理更新我的github个人博客》 — 有趣&source=踩出来的脚印也是宝贵的财富" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://aliaosha.github.io/2017/03/12/多电脑管理更新我的github个人博客/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《多电脑管理更新我的github个人博客》 — 有趣&url=https://aliaosha.github.io/2017/03/12/多电脑管理更新我的github个人博客/&via=https://aliaosha.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://aliaosha.github.io/2017/03/12/多电脑管理更新我的github个人博客/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/03/11/hello-world/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Hello World</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+<div class="comments" id="comments">
+    <div class="ds-thread" data-thread-key="多电脑管理更新我的github个人博客" data-title="多电脑管理更新我的github个人博客" data-url="https://aliaosha.github.io/2017/03/12/多电脑管理更新我的github个人博客/"></div>
+</div>
+<script>
+lazyScripts.push('//cdn.bootcss.com/marked/0.3.6/marked.min.js');
+
+var duoshuoQuery = {short_name:'liaoblog', theme: 'none'};
+lazyScripts.push('/js/embed.min.js?v=1.4.10');
+
+
+</script>
+
+
+
+
+<section class="comments" id="comments">
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_shortname = 'liaoblog';
+    lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
+        
+        <li>
+            <img src="/img/donate_weixin.png" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
+        
+
+        
+        <li>
+            <img src="/img/donate_alipay.jpg" title="支付宝打赏二维码" alt="支付宝打赏二维码">
+            <p>支付宝</p>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            <span>博客内容遵循 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p>
+            <span>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
+            <span>有趣 &copy; 2017</span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://aliaosha.github.io/2017/03/12/多电脑管理更新我的github个人博客/&title=《多电脑管理更新我的github个人博客》 — 有趣&pic=https://aliaosha.github.io/img/touxiang.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://aliaosha.github.io/2017/03/12/多电脑管理更新我的github个人博客/&title=《多电脑管理更新我的github个人博客》 — 有趣&source=踩出来的脚印也是宝贵的财富" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://aliaosha.github.io/2017/03/12/多电脑管理更新我的github个人博客/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《多电脑管理更新我的github个人博客》 — 有趣&url=https://aliaosha.github.io/2017/03/12/多电脑管理更新我的github个人博客/&via=https://aliaosha.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://aliaosha.github.io/2017/03/12/多电脑管理更新我的github个人博客/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://aliaosha.github.io/2017/03/12/多电脑管理更新我的github个人博客/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.4.10"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.4.10" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>

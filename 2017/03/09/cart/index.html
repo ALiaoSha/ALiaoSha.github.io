@@ -339,7 +339,7 @@
 <script>
 lazyScripts.push('//cdn.bootcss.com/marked/0.3.6/marked.min.js');
 
-var duoshuoQuery = {short_name:'ysblog', theme: 'none'};
+var duoshuoQuery = {short_name:'liaoblog', theme: 'none'};
 lazyScripts.push('/js/embed.min.js?v=1.4.10');
 
 
@@ -347,6 +347,15 @@ lazyScripts.push('/js/embed.min.js?v=1.4.10');
 
 
 
+
+<section class="comments" id="comments">
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_shortname = 'liaoblog';
+    lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
 
 
 
@@ -402,7 +411,7 @@ lazyScripts.push('/js/embed.min.js?v=1.4.10');
     <div class="bottom">
         <p>
             <span>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
-            <span>有趣 &copy; 2015 - 2017</span>
+            <span>有趣 &copy; 2017</span>
         </p>
     </div>
 </footer>
