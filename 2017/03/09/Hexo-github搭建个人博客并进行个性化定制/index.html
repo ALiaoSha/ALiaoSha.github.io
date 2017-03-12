@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    
+    
+    
+    <title>Hexo+github搭建个人博客并进行个性化定制 | 有趣 | -for notes and fun</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="技术">
+    <meta name="description" content="1. 前言费了两天的劲终于能在自己搭建的博客上写东西了。对于我这个网页前端小白来说，遇到的坑确实不少。Hexo确实简单好用，不过如果想搭建一个界面漂亮的个人博客还是需要花时间折腾一番。这里我会比较详细的梳理我从无到有的搭建我的个人博客的过程，以及记录我踩过了那些坑。
+2. 准备工作hexo是基于node.js的所以你必须在node.js的官网上面下载并安装，这样你才能用npm。我的博客是部署在gi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo+github搭建个人博客并进行个性化定制">
+<meta property="og:url" content="https://aliaosha.github.io/2017/03/09/Hexo-github搭建个人博客并进行个性化定制/index.html">
+<meta property="og:site_name" content="有趣">
+<meta property="og:description" content="1. 前言费了两天的劲终于能在自己搭建的博客上写东西了。对于我这个网页前端小白来说，遇到的坑确实不少。Hexo确实简单好用，不过如果想搭建一个界面漂亮的个人博客还是需要花时间折腾一番。这里我会比较详细的梳理我从无到有的搭建我的个人博客的过程，以及记录我踩过了那些坑。
+2. 准备工作hexo是基于node.js的所以你必须在node.js的官网上面下载并安装，这样你才能用npm。我的博客是部署在gi">
+<meta property="og:image" content="https://aliaosha.github.io/images/ssh_vrif.png">
+<meta property="og:image" content="https://aliaosha.github.io/themes/jsimple/source/images/favicon.PNG">
+<meta property="og:updated_time" content="2017-03-11T12:27:07.415Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo+github搭建个人博客并进行个性化定制">
+<meta name="twitter:description" content="1. 前言费了两天的劲终于能在自己搭建的博客上写东西了。对于我这个网页前端小白来说，遇到的坑确实不少。Hexo确实简单好用，不过如果想搭建一个界面漂亮的个人博客还是需要花时间折腾一番。这里我会比较详细的梳理我从无到有的搭建我的个人博客的过程，以及记录我踩过了那些坑。
+2. 准备工作hexo是基于node.js的所以你必须在node.js的官网上面下载并安装，这样你才能用npm。我的博客是部署在gi">
+<meta name="twitter:image" content="https://aliaosha.github.io/images/ssh_vrif.png">
+    
+        <link rel="alternative" href="/atom.xml" title="有趣" type="application/atom+xml">
+    
+    <link rel="shortcut icon" href="/img/my_avatar.jgp">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.10">
+    <script>window.lazyScripts=[]</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/touxiang.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Kevin Zhou</h5>
+          <a href="mailto:1360710851@qq.com" title="1360710851@qq.com" class="mail">1360710851@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/ALiaoSha" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/ysweb" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Hexo+github搭建个人博客并进行个性化定制</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Hexo+github搭建个人博客并进行个性化定制</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-03-09T05:25:29.000Z" itemprop="datePublished" class="page-time">
+  2017-03-09
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/tech/">技术</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#1-前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">1. 前言</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#2-准备工作"><span class="post-toc-number">2.</span> <span class="post-toc-text">2. 准备工作</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#注册你的github账号"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">注册你的github账号</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#安装hexo"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">安装hexo</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#3-开始搭建一个基本的框架"><span class="post-toc-number">3.</span> <span class="post-toc-text">3. 开始搭建一个基本的框架</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#4-定制你的博客界面"><span class="post-toc-number">4.</span> <span class="post-toc-text">4. 定制你的博客界面</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#5-解决数学公式的支持问题"><span class="post-toc-number">5.</span> <span class="post-toc-text">5. 解决数学公式的支持问题</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#6-使用插件"><span class="post-toc-number">6.</span> <span class="post-toc-text">6. 使用插件</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#7-References"><span class="post-toc-number">7.</span> <span class="post-toc-text">7. References</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#—————————"><span class="post-toc-number">7.1.</span> <span class="post-toc-text">—————————-</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-Hexo-github搭建个人博客并进行个性化定制"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Hexo+github搭建个人博客并进行个性化定制</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017年03月09日 13:25" datetime="2017-03-09T05:25:29.000Z"  itemprop="datePublished">2017-03-09</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/tech/">技术</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h1><p>费了两天的劲终于能在自己搭建的博客上写东西了。对于我这个网页前端小白来说，遇到的坑确实不少。Hexo确实简单好用，不过如果想搭建一个界面漂亮的个人博客还是需要花时间折腾一番。这里我会比较详细的梳理我从无到有的搭建我的个人博客的过程，以及记录我踩过了那些坑。</p>
+<h1 id="2-准备工作"><a href="#2-准备工作" class="headerlink" title="2. 准备工作"></a>2. 准备工作</h1><p>hexo是基于node.js的所以你必须在node.js的官网上面下载并安装，这样你才能用npm。<br>我的博客是部署在github上面的，所以需要用到git。linux系统一般自带git，比较方便。Win用户需要在git官网下载安装git for windows并安装。顺便再这里推荐一下我使用的atom编辑器。它是github社区发布的一款面向21世纪的潮流编辑器。是基于web的编辑器.</p>
+<h2 id="注册你的github账号"><a href="#注册你的github账号" class="headerlink" title="注册你的github账号"></a>注册你的github账号</h2><p>这个网上很多明确的教程，推荐看一看<a href="http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000" target="_blank" rel="external">廖雪峰的git教程</a><br>依次注册github账号，添加SSH-key, 设置用户名和邮箱，把秘钥添加到github里面就ok。<br>最后验证你的绑定是否成功：<br><img src="/images/ssh_vrif.png" width="100%" height="100%" align="center"></p>
+<h2 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h2><p>很简单只要一个命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install hexo-cli -g</div></pre></td></tr></table></figure></p>
+<p>hexo就安装成功了。然后就可以搭建你的 网站。</p>
+<ul>
+<li><p>新建一个文件夹，进入文件夹后用命令hexo init初始化。最简洁的是直接指定初始化的目录，hexo会自动生成它。然后cd进去。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">hexo init myblog</div><div class="line">cd myblog</div></pre></td></tr></table></figure>
+</li>
+<li><p>安装依赖和插件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install</div></pre></td></tr></table></figure>
+</li>
+<li><p>hexo</p>
+<h1 id="3-开始搭建一个基本的框架"><a href="#3-开始搭建一个基本的框架" class="headerlink" title="3. 开始搭建一个基本的框架"></a>3. 开始搭建一个基本的框架</h1><p>做好准备工作以后就要开始利用</p>
+<h1 id="4-定制你的博客界面"><a href="#4-定制你的博客界面" class="headerlink" title="4. 定制你的博客界面"></a>4. 定制你的博客界面</h1><p><img src="themes/jsimple/source/images/favicon.PNG" alt=""></p>
+<h1 id="5-解决数学公式的支持问题"><a href="#5-解决数学公式的支持问题" class="headerlink" title="5. 解决数学公式的支持问题"></a>5. 解决数学公式的支持问题</h1><p>由于我用的jSimple主题没有启用mathjax的配置，所以我采用的是安装hexo-math插件的方法,帮助我们渲染latex公式。<br>安装（注意命令一定要加–save）：</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install hexo-math --save</div></pre></td></tr></table></figure>
+<p>安装时候提示信息可能显示这个插件已经deprecated。没有关系，只要能用就行。<br>设置： 在全局_config.yml文件中添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">plugins:</div><div class="line">    - hexo-math</div></pre></td></tr></table></figure></p>
+<p>然后在你所用的theme主题的_config.yml文件中添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># MathJax Support</div><div class="line">math.mathjax:</div><div class="line">  enable: true</div><div class="line">  per_page: true</div></pre></td></tr></table></figure></p>
+<p>这样就启用了mathjax渲染公式。<br>我在实施了上面步骤之后发现自动部署的插件不能用了，报错为：“hexo ERROR Deployer not found: git” Google之后没发现什么明确的解决方法。我就把hexo-deployer-git也添加到plugins里面成功解决了这个报错。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">plugins:</div><div class="line">    - hexo-math</div><div class="line">    - hexo-deployer-git</div></pre></td></tr></table></figure></p>
+<h1 id="6-使用插件"><a href="#6-使用插件" class="headerlink" title="6. 使用插件"></a>6. 使用插件</h1><p>整个部署过程我就用了hexo-deployer-git和hexo-math两个插件。要想使用其他插件只需要在全局_config.yml文件的plugins下面添加插件名称就够了(当然，前提你先要hexo install)</p>
+<h1 id="7-References"><a href="#7-References" class="headerlink" title="7. References"></a>7. References</h1><p><a href="http://ibruce.info/2013/11/22/hexo-your-blog/" target="_blank" rel="external">hexo你的博客|不如</a><br><a href="http://blog.tangxiaozhu.com/p/45374067/" target="_blank" rel="external">使用 Hexo 搭建博客的深度优化与定制</a><br><a href="http://wangcaiyong.com/2015/06/25/mathjax/" target="_blank" rel="external">在 Jacman使用 Mathjax 输出数学式</a></p>
+<h2 id="—————————"><a href="#—————————" class="headerlink" title="—————————-"></a>—————————-</h2><p>还有一大堆问题没有解决：</p>
+<ul>
+<li>字体配置问题</li>
+<li>图片插入问题</li>
+<li>archives和about界面问题</li>
+<li>部署以后的时候头像问题</li>
+<li>插入的代码的时候显示代码block很丑陋</li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2017-03-11T12:27:07.415Z" itemprop="dateUpdated">2017年3月11日 20:27</time>
+</span><br>
+
+
+        这里写留言或版权声明：<a href="/2017/03/09/Hexo-github搭建个人博客并进行个性化定制/" target="_blank" rel="external">https://aliaosha.github.io/2017/03/09/Hexo-github搭建个人博客并进行个性化定制/</a>
+    </div>
+    <footer>
+        <a href="https://aliaosha.github.io">
+            <img src="/img/touxiang.png" alt="Kevin Zhou">
+            Kevin Zhou
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术/">技术</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://aliaosha.github.io/2017/03/09/Hexo-github搭建个人博客并进行个性化定制/&title=《Hexo+github搭建个人博客并进行个性化定制》 — 有趣&pic=https://aliaosha.github.io/img/touxiang.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://aliaosha.github.io/2017/03/09/Hexo-github搭建个人博客并进行个性化定制/&title=《Hexo+github搭建个人博客并进行个性化定制》 — 有趣&source=踩出来的脚印也是宝贵的财富" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://aliaosha.github.io/2017/03/09/Hexo-github搭建个人博客并进行个性化定制/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Hexo+github搭建个人博客并进行个性化定制》 — 有趣&url=https://aliaosha.github.io/2017/03/09/Hexo-github搭建个人博客并进行个性化定制/&via=https://aliaosha.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://aliaosha.github.io/2017/03/09/Hexo-github搭建个人博客并进行个性化定制/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/03/11/hello-world/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Hello World</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/03/09/cart/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">决策树总结</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+<div class="comments" id="comments">
+    <div class="ds-thread" data-thread-key="Hexo-github搭建个人博客并进行个性化定制" data-title="Hexo+github搭建个人博客并进行个性化定制" data-url="https://aliaosha.github.io/2017/03/09/Hexo-github搭建个人博客并进行个性化定制/"></div>
+</div>
+<script>
+lazyScripts.push('//cdn.bootcss.com/marked/0.3.6/marked.min.js');
+
+var duoshuoQuery = {short_name:'ysblog', theme: 'none'};
+lazyScripts.push('/js/embed.min.js?v=1.4.10');
+
+
+</script>
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
+        
+        <li>
+            <img src="/img/donate_weixin.png" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
+        
+
+        
+        <li>
+            <img src="/img/donate_alipay.jpg" title="支付宝打赏二维码" alt="支付宝打赏二维码">
+            <p>支付宝</p>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            <span>博客内容遵循 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p>
+            <span>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
+            <span>有趣 &copy; 2015 - 2017</span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://aliaosha.github.io/2017/03/09/Hexo-github搭建个人博客并进行个性化定制/&title=《Hexo+github搭建个人博客并进行个性化定制》 — 有趣&pic=https://aliaosha.github.io/img/touxiang.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://aliaosha.github.io/2017/03/09/Hexo-github搭建个人博客并进行个性化定制/&title=《Hexo+github搭建个人博客并进行个性化定制》 — 有趣&source=踩出来的脚印也是宝贵的财富" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://aliaosha.github.io/2017/03/09/Hexo-github搭建个人博客并进行个性化定制/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Hexo+github搭建个人博客并进行个性化定制》 — 有趣&url=https://aliaosha.github.io/2017/03/09/Hexo-github搭建个人博客并进行个性化定制/&via=https://aliaosha.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://aliaosha.github.io/2017/03/09/Hexo-github搭建个人博客并进行个性化定制/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://aliaosha.github.io/2017/03/09/Hexo-github搭建个人博客并进行个性化定制/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.4.10"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.4.10" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>

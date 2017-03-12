@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    
+    
+    
+    <title>决策树总结 | 有趣 | -for notes and fun</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="机器学习，分类，决策树">
+    <meta name="description" content="树模型是机器学习中一类强有力的模型。曾经有个Princeton大学的教授来我校做报告的时候说过，
+“tree model是最保险的模型。当你不知道该用什么模型好的时候，Tree model一定是一个理想的选择。它可能不会是最好，但是一定不会很坏。”
+在这里我想总结一下三种最基本、最常用的决策树模型 ID3，C4.5和CART，因为所做的项目中用到了CART模型，所以想梳理一下，加深对决策树模型的理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="决策树总结">
+<meta property="og:url" content="https://aliaosha.github.io/2017/03/09/cart/index.html">
+<meta property="og:site_name" content="有趣">
+<meta property="og:description" content="树模型是机器学习中一类强有力的模型。曾经有个Princeton大学的教授来我校做报告的时候说过，
+“tree model是最保险的模型。当你不知道该用什么模型好的时候，Tree model一定是一个理想的选择。它可能不会是最好，但是一定不会很坏。”
+在这里我想总结一下三种最基本、最常用的决策树模型 ID3，C4.5和CART，因为所做的项目中用到了CART模型，所以想梳理一下，加深对决策树模型的理">
+<meta property="og:updated_time" content="2017-03-11T12:27:07.418Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="决策树总结">
+<meta name="twitter:description" content="树模型是机器学习中一类强有力的模型。曾经有个Princeton大学的教授来我校做报告的时候说过，
+“tree model是最保险的模型。当你不知道该用什么模型好的时候，Tree model一定是一个理想的选择。它可能不会是最好，但是一定不会很坏。”
+在这里我想总结一下三种最基本、最常用的决策树模型 ID3，C4.5和CART，因为所做的项目中用到了CART模型，所以想梳理一下，加深对决策树模型的理">
+    
+        <link rel="alternative" href="/atom.xml" title="有趣" type="application/atom+xml">
+    
+    <link rel="shortcut icon" href="/img/my_avatar.jgp">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.10">
+    <script>window.lazyScripts=[]</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/touxiang.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Kevin Zhou</h5>
+          <a href="mailto:1360710851@qq.com" title="1360710851@qq.com" class="mail">1360710851@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/ALiaoSha" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/ysweb" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">决策树总结</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">决策树总结</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-03-09T04:44:33.000Z" itemprop="datePublished" class="page-time">
+  2017-03-09
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Machine-Learning/">机器学习</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#ID3"><span class="post-toc-number">1.</span> <span class="post-toc-text">ID3</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#C4-5"><span class="post-toc-number">2.</span> <span class="post-toc-text">C4.5</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#CART"><span class="post-toc-number">3.</span> <span class="post-toc-text">CART</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-cart"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">决策树总结</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017年03月09日 12:44" datetime="2017-03-09T04:44:33.000Z"  itemprop="datePublished">2017-03-09</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Machine-Learning/">机器学习</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>树模型是机器学习中一类强有力的模型。曾经有个Princeton大学的教授来我校做报告的时候说过，</p>
+<pre><code>“tree model是最保险的模型。当你不知道该用什么模型好的时候，Tree model一定是一个理想的选择。它可能不会是最好，但是一定不会很坏。”
+</code></pre><p>在这里我想总结一下三种最基本、最常用的决策树模型 ID3，C4.5和CART，因为所做的项目中用到了CART模型，所以想梳理一下，加深对决策树模型的理解。</p>
+<p>决策树模型最核心的intuition就是在树的每一层对数据集进行切分，分成两个子集合，切分的依据就是“使得分开的两类样本在各自的集合中有序度最高（无序度最低）”。这样的切分方式对分类问题来说才是最好的切分。既然要使集合内样本有序度高（也就是样本纯度高），数学上必须引入一个概念来衡量有序程度，那就是<strong>信息熵(Information Entropy)</strong>。这是信息论祖师爷<strong>克劳德 ⋅香农Claude Shannon</strong>提出来的。</p>
+<p>　　熵被用来衡量一个随机变量出现的期望值。熵越大，一个变量的不确定性就越大（也就是可取的值很多），把它搞清楚所需要的信息量也就越大，熵是整个系统的<strong>平均消息量</strong>。 信息熵是信息论中用于度量信息量的一个概念。一个系统越是有序，信息熵就越低；反之，一个系统越是混乱，信息熵就越高。它的计算公式为：</p>
+<p>$$Entropy = H(D)=E[I(D)] = -\sum_i^{n} p_ilog_2(p_i)$$<br>其中，D是样本集合，$I(D)=-log_2p_i$是样本集合的信息量, $p_i$是任意样本属于类i的<em>非零概率</em>。</p>
+<pre><code>“熵越大，说明系统越混乱，携带的信息就越少。熵越小，说明系统越有序，携带的信息就越多。信息的作用就是在于消除不确定性”
+</code></pre><p>（基于此可以证明Gaussian的熵为$H[x] = \frac{1}{2}{1+ln(2\pi\sigma^2)}$）</p>
+<p>这三个模型最根本的区别就是对树枝进行分裂的时候分裂信息（或者说标准）不同。但是都是基于信息熵的。</p>
+<h1 id="ID3"><a href="#ID3" class="headerlink" title="ID3"></a>ID3</h1><p>采用信息增益（Information Gain）作为节点的分裂标准。<br>信息增益在统计学中成为互信息。互信息(mutual Information)是条件概率与后验概率的比值。</p>
+<ul>
+<li>信息增益计算：<br>$$IG(A) = H(D)-H(D|A)$$<br>$$where，H(D|A)=\sum_i \frac{|D_j|}{D}H(D_j)$$<br>A可以看做分类特征，以这个特征对D集合切分的时候就要计算她的IG。条件熵H(D|A)表示的是以A特征切分的时候，样本集D的混乱程度。如果以A特征切分时正好能把D的类别完全分开，那么分开的类别最有序，H(D|A)=0.</li>
+</ul>
+<h1 id="C4-5"><a href="#C4-5" class="headerlink" title="C4.5"></a>C4.5</h1><p>采用信息增益率（Information Gain Ratio）作为节点的分裂标准<br>ID3中用信息增益有一个缺点就是训练样本类别不平衡，倾向选择取值多的属性<br>所以C4.5在以下几个方面进行了改进：</p>
+<ul>
+<li>以信息增益率为标准选择切分属性。</li>
+<li>在树的构造过程中完成剪枝，防止过拟合。</li>
+<li>可以对连续属性离散化处理。</li>
+<li>可以处理不完整数据集</li>
+</ul>
+<p>信息增益率计算公式：<br>$$IGR(A)=\frac{IG(A)}{Split(D|A)}$$</p>
+<h1 id="CART"><a href="#CART" class="headerlink" title="CART"></a>CART</h1><p>采用基尼指数（Gini Index）作为节点的分裂标准<br>CART全称Classification and Regression Tree，所以它既可以做分类也可以做回归。这里主要讲分类。<br>基尼指数定义：</p>
+<p>分类问题中， 假设有K个类，样本属于第k个类的概率为$p_k$,则概率分布的基尼指数为</p>
+<p>$$Gini(p) = \sum_{k=1}^Kp_k(1-p_k)$$</p>
+<p>由定义可以看到，当类别确定性高的的时候基尼系数趋近于0.<br>对于给定样本集合D,其基尼系数为<br>$$Gini(D)=1-\sum_{k=1}^K(\frac{|C_k|}{D})^2$$<br>根据特征A对数据集D切分，得到的基尼指数：<br>$$Gini(D,A)=\frac{|D_1|}{D}Gini(D_1)+\frac{|D_2|}{D}Gini(D_2)$$</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2017-03-11T12:27:07.418Z" itemprop="dateUpdated">2017年3月11日 20:27</time>
+</span><br>
+
+
+        这里写留言或版权声明：<a href="/2017/03/09/cart/" target="_blank" rel="external">https://aliaosha.github.io/2017/03/09/cart/</a>
+    </div>
+    <footer>
+        <a href="https://aliaosha.github.io">
+            <img src="/img/touxiang.png" alt="Kevin Zhou">
+            Kevin Zhou
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习，分类，决策树/">机器学习，分类，决策树</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://aliaosha.github.io/2017/03/09/cart/&title=《决策树总结》 — 有趣&pic=https://aliaosha.github.io/img/touxiang.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://aliaosha.github.io/2017/03/09/cart/&title=《决策树总结》 — 有趣&source=踩出来的脚印也是宝贵的财富" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://aliaosha.github.io/2017/03/09/cart/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《决策树总结》 — 有趣&url=https://aliaosha.github.io/2017/03/09/cart/&via=https://aliaosha.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://aliaosha.github.io/2017/03/09/cart/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/03/09/Hexo-github搭建个人博客并进行个性化定制/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Hexo+github搭建个人博客并进行个性化定制</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/03/08/numpy-array的存储和读读取方式/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">numpy array的存储和读读取方式</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+<div class="comments" id="comments">
+    <div class="ds-thread" data-thread-key="cart" data-title="决策树总结" data-url="https://aliaosha.github.io/2017/03/09/cart/"></div>
+</div>
+<script>
+lazyScripts.push('//cdn.bootcss.com/marked/0.3.6/marked.min.js');
+
+var duoshuoQuery = {short_name:'ysblog', theme: 'none'};
+lazyScripts.push('/js/embed.min.js?v=1.4.10');
+
+
+</script>
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
+        
+        <li>
+            <img src="/img/donate_weixin.png" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
+        
+
+        
+        <li>
+            <img src="/img/donate_alipay.jpg" title="支付宝打赏二维码" alt="支付宝打赏二维码">
+            <p>支付宝</p>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            <span>博客内容遵循 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p>
+            <span>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
+            <span>有趣 &copy; 2015 - 2017</span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://aliaosha.github.io/2017/03/09/cart/&title=《决策树总结》 — 有趣&pic=https://aliaosha.github.io/img/touxiang.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://aliaosha.github.io/2017/03/09/cart/&title=《决策树总结》 — 有趣&source=踩出来的脚印也是宝贵的财富" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://aliaosha.github.io/2017/03/09/cart/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《决策树总结》 — 有趣&url=https://aliaosha.github.io/2017/03/09/cart/&via=https://aliaosha.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://aliaosha.github.io/2017/03/09/cart/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://aliaosha.github.io/2017/03/09/cart/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.4.10"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.4.10" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>
