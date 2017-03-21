@@ -188,8 +188,12 @@
     <div class="post-content" id="post-content" itemprop="postContent">
 
     
-        解决的问题基于hexo和github搭建的博客有时候需要在博文中插入图片，用markdown语法![](图片路径)的方法只能在本地看到。不会被deploy到github pages上。这个问题目前有很多解决的方法。下面列出两种：
-用CDN服务CDN(即内容分发网络)服务，可以让我们把图片放到服务器上。想在博客里面插入图片的时候，引用服务器上图片的链接地址就可以了。最简单的我们可以把图片上传到...
+        <h1 id="解决的问题"><a href="#解决的问题" class="headerlink" title="解决的问题"></a>解决的问题</h1><p>基于hexo和github搭建的博客有时候需要在博文中插入图片，用markdown语法<code>![](图片路径)</code>的方法只能在本地看到。不会被deploy到github pages上。这个问题目前有很多解决的方法。下面列出两种：</p>
+<h1 id="用CDN服务"><a href="#用CDN服务" class="headerlink" title="用CDN服务"></a>用CDN服务</h1><p><a href="http://baike.baidu.com/item/CDN" target="_blank" rel="external">CDN</a>(即内容分发网络)服务，可以让我们把图片放到服务器上。想在博客里面插入图片的时候，引用服务器上图片的链接地址就可以了。最简单的我们可以把图片上传到自己的个人微博，然后用<code>![](微博图片地址)</code>的方式引用图片。还有一个方法是使用<a href="https://www.qiniu.com/" target="_blank" rel="external">七牛</a>作为图床，每次写博客的时候先把图片上传到七牛的服务器上面去，需要的时候引用服务器上图片的地址。</p>
+<h1 id="本地图片上传到github-page上"><a href="#本地图片上传到github-page上" class="headerlink" title="本地图片上传到github page上"></a>本地图片上传到github page上</h1><p>我们的博客是用hexo生成的和部署到github上面的，所以手动添加图片到github page上面特别麻烦。还好有一个插件<code>hexo-asset-image</code>可以帮助我们完成这个任务。<br>安装插件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install hexo-asset-image --save</div></pre></td></tr></table></figure></p>
+<p>在全局_config.yml文件中plugins选项下加上<code>hexo-asset-image</code>表明要使用这个插件。<br>之后你用hexo新建文章的时候会发现<code>_post</code>目录下回自动生成一个和文章名字一样的目录。文章所需要引用的图片可以都放在这个目录下面。在markdown文档里面引用的时候只要写<code>![title](文章名字/图片名字)</code>就可以顺利插入图片了。并且当用<code>hexo d</code>部署到github上面的时候，这些图片相应也会被上传上去。</p>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p><a href="http://www.jianshu.com/p/c2ba9533088a" target="_blank" rel="external">http://www.jianshu.com/p/c2ba9533088a</a></p>
+
     
 
         <a href="/2017/03/12/Hexo博客解决博客里面插入图片的问题/" class="post-more waves-effect waves-button">
@@ -215,6 +219,8 @@
         <time class="post-time" title="2017年03月12日 16:52" datetime="2017-03-12T08:52:28.607Z"  itemprop="datePublished">2017-03-12</time>
 
         
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Machine-Learning/">机器学习</a></li></ul>
+
 
 
         
@@ -236,12 +242,60 @@
     <div class="post-content" id="post-content" itemprop="postContent">
 
     
-        
+        <p>在公司里面用adaboost做了一个量化选股的模型，虽然算法部分是调用sklearn包里面的函数完成的，算法的核心思想还是需要弄个清楚。在这里梳理一下。</p>
+<h1 id="集成学习"><a href="#集成学习" class="headerlink" title="集成学习"></a>集成学习</h1><p>AdaBoost算法是属于集成学习的分类算法。这里有必要介绍一下集成学习。<br>集成学习（Ensemble Learning）的思想类似于“三个臭皮匠赛过诸葛亮”。单个决策者做的决策准确率如果大于50%，那么多个决策者一起参与决策肯定会提高最终决策的准确度。<br>用二项分布和Hoeffding不等式可以简单地证明，随着集成中个体分类器的数目T增大，集成的错误了呈指数下降，最终趋向于0.</p>
+<h2 id="如何选择-生成单个决策者-弱分类器-？"><a href="#如何选择-生成单个决策者-弱分类器-？" class="headerlink" title="如何选择/生成单个决策者(弱分类器)？"></a>如何选择/生成单个决策者(弱分类器)？</h2><p>首先，单个弱分类器的分类准确率一定要大于0.5，不然就像民粹主义的结果一样，一群愚蠢的民众会做出愚蠢的决定。<br>第二， 每个弱分类器一定要有“多样性”，要达到“好而不同”。不然相似的分类器做出相似的决定，对最终分类的表现不会有很大提升。<br>生成“好而不同”的弱分类器的思想有两个：Boosting 和 Bagging(<em>abbr.</em> Bootstrap aggregating)</p>
+<ul>
+<li>Boosting 的角度是，从一个初始的弱分类器开始，对数据集进行分类以后，增加对那些分错的样本的权重。代表算法是<strong>AdaBoost</strong>。</li>
+<li><p>Bagging 的角度是，对数据集随机分成很多份，每一份数据集生成一个弱分类器。代表算法是<strong>Random Forest</strong>。</p>
+<h1 id="Notations"><a href="#Notations" class="headerlink" title="Notations"></a>Notations</h1><p>表达式                    |意义<br>————————-|–<br>$D = {(x,y)|y=f(x)}$  |  数据集，f(x)表示真实函数<br>$h(x)$                   |  基学习器/ 弱分类器<br>$w<em>t$                    |  样本权重<br>$L</em>{exp}(H_t, w_t|D)$    |  指数损失<br>$\epsilon$               |  分类错误率</p>
+<h1 id="AdaBoost"><a href="#AdaBoost" class="headerlink" title="AdaBoost"></a>AdaBoost</h1><p>##　工作机制</p>
+</li>
+</ul>
+<ol>
+<li>从数据集中训练出一个基分类器，根据基学习器的表现对训练样本的分布进行调整（对样本赋权），使得基学习器分错的样本在下一轮训练中得到更多的关注</li>
+<li>基于调整后的训练样本重新训练一个基学习器，如此反复，直到基学习器的个数达到预设的T个。</li>
+<li>将这T个基学习器加权结合得到最终的集成学习器</li>
+</ol>
+<p>##　推导<br><strong>在对任何模型进行推导的时候都要时刻记住：你的模型是什么，你的目标函数是什么，要用到哪些trick</strong>。<br>在进行机器学习算法推导的时候也要时刻记住这个准则，这样推导的难度会大大降低。<br>这里的推导参考了周志华的《机器学习》这本书。也是基于“加性模型”，对指数损失函数最小化。<br>加性模型中集成学习器表示为基学习器的线性组合：<br>$$ H<em>T(x) = \sum</em>{t=1}^T \alpha_t h<em>t(x)$$<br>指数损失函数:<br>$$ L</em>{exp}(H_t, w<em>t|D) = \frac{1}{N} \sum</em>{i=1}^N e^{-f(x_i)H_t(x<em>i)} = E</em>{x\in D}[e^{-f(x)H_t(x)}]$$</p>
+<p>我们的目的是最小化指数损失函数。从指数损失函数的定义我们可以看到，在训练第t个弱学习器的时候，影响$L_{exp}$ 的两个参数就是 $\alpha_t$ 和 $h_t(x)$ 。<br>我们先对固定$h<em>t(x)$ 分析$L</em>{exp}$ 与  $\alpha_t$ 之间的关系。</p>
+<h3 id="找到使-L-exp-最小化的-alpha-t"><a href="#找到使-L-exp-最小化的-alpha-t" class="headerlink" title="找到使$L_{exp}$ 最小化的 $\alpha_t$"></a>找到使$L_{exp}$ 最小化的 $\alpha_t$</h3><p>$$<br>\begin{align}<br> L_{exp}(H_t,w<em>t| D) &amp; = E</em>{x\in D}[e^{-f(x)H<em>t(x)}]\<br>                     &amp; = E</em>{x \in D}[e^{-f(x)\alpha_t h<em>t(x)-f(x)H</em>{t-1}(x)}]\<br>                     &amp; = E_{x \in D}[e^{-f(x)\alpha_t h<em>t(x)}\cdot e^{-f(x)H</em>{t-1}(x)}]\<br>    \end{align}<br>    \tag{1}<br>$$<br>上式中，只有$e^{-f(x)\alpha_t h_t(x)}$ 部分与 $\alpha<em>t$ 有关。由于期望的线性性，我们只需要关注$E</em>{x \in D}[e^{-f(x)\alpha_t h<em>t(x)}]$ 这一部分。<br>$$<br>\begin{align}<br>E</em>{x \in D}[e^{-f(x)\alpha_t h<em>t(x)}] &amp; = E</em>{x \in D}[e^{-\alpha_t} I(f(x)= h_t(x))+e^{\alpha_t} I(f(x) \neq h_t(x))]\<br>                                      &amp; = e^{-\alpha_t}\mathbb{P}(f(x)= h_t(x)) + e^{\alpha_t}\mathbb{P}(f(x)\neq h_t(x))\<br>                                      &amp; = e^{-\alpha_t}(1-\epsilon_t)+e^{\alpha_t}\epsilon<em>t<br>\end{align}<br>$$<br>where $I(\cdot)$ is a indicator funtion.<br>$$<br>        \mathbb{I}(f(x)=h(x)) =<br>        \begin{cases}<br>        1, &amp; \text{if $f(x)=h(x)$}\<br>        0, &amp;\text{if $f(x) \neq h(x)$}<br>        \end{cases}<br>$$<br>$E</em>{x \in D}[e^{-f(x)\alpha_t h_t(x)}]$ 对 $\alpha_t$ 求导，并令导数为$0$可以求得极小值点：<br>$$<br>\alpha_t = \frac{1}{2}\ln(\frac{1-\epsilon_t}{\epsilon_t})<br>$$</p>
+<h3 id="找到使-L-exp-H-t-1-w-t-1-D-最小的-w-t-1"><a href="#找到使-L-exp-H-t-1-w-t-1-D-最小的-w-t-1" class="headerlink" title="找到使$L{exp}(H{t+1},w{t+1}| D)$ 最小的 $w{t+1}$"></a>找到使$L<em>{exp}(H</em>{t+1},w<em>{t+1}| D)$ 最小的 $w</em>{t+1}$</h3><p>Adaboost算法在训练出 $t-1$ 个弱学习器之后要根据$H_{t-1}(x)$ 的表现调整样本的分布(给样本重新分配权重)。我们要找到这个权重使得在$t$阶段训练出来的弱学习器$h_t(x)$ 能使分类误差最小。按理来说应该最小化损失函数，但是直接最小化损失函数推导难度较大，改成分类误差。<br>周志华是从样本分布变化的角度来更新训练样本集而PRML是从样本权重变化的角度来更新样本集。<br>两本书都不是用分析的方法得到的结果，而是直接令目标函数式里的一部分为权重更新值，最后证明这个值可以使分类误差最小化。我觉得PRML里面的推导方式更好理解一点在这里引用他的方式。</p>
+<p>PRML书上的推导直接把 式(1)中的 $e^{-f(x)H_{t-1}(x)}$ 部分当做 $w_t$，即<br>$$<br>w<em>t = e^{-f(X)H</em>{t-1}(X)}<br>$$<br>从直观的角度来看，这样的赋值是合理的。如果 $f(x)=H_{t-1}(x)$ 则样本x的权重 $w<em>t^{(x)}$ 会变小，如果 $f(x)\neq H</em>{t-1}(x)$ 则样本x的权重 $w_t^{(x)}$ 会变大。</p>
+<p>式(1)等价表示：<br>$$<br>\begin{align}<br> L_{exp}(H_t,w<em>t| D) &amp; = E</em>{x \in D}[e^{-f(x)\alpha_t h_t(x)}\cdot w<em>t^{(x)}]\<br>                     &amp; = {1\over N}\sum</em>{i=1}^{N}e^{-f(x_i)\alpha_t h_t(x_i)}\cdot w_t^{(i)}\<br>                     &amp; = {1\over N}e^{-\alpha<em>t}\sum</em>{i\in T_t}w_t^{(i)} +　{1\over N}e^{\alpha<em>t}\sum</em>{i\in M_t}w_t^{(i)}\<br>                     &amp; = {1\over N}(e^{\alpha_t}-e^{-\alpha<em>t})\sum</em>{i=1}^{N}w_t^{(i)} \mathbb{I}(f(x_i)\neq h_t(x_i))</p>
+<pre><code>                      + {1\over N}e^{-\alpha_t}\sum_{i=1}^{N}w_t^{(i)}
+\end{align}
+\tag{2}
+</code></pre><p>$$<br>等式右边最后一项跟$h<em>t(x)$ 没有关系，所以只需要最小化 $\sum</em>{i=1}^{N}w_t^{(i)} \mathbb{I}(f(x_i)\neq h_t(x<em>i))$ 就可以了。<br>$$<br>\begin{align}<br>w</em>{t+1} &amp; = e^{-f(X)H_{t}(X)}\<br>        &amp; = e^{-f(X)\alpha<em>t h</em>{t}(X)}\cdot e^{-f(X)H_{t-1}(X)}\<br>        &amp; = e^{-\alpha<em>t (1-2\mathbb{I}(f(X)\neq h</em>{t}(X)))} \cdot w_t\<br>        &amp; = w_t e^{-\alpha_t}e^{2\alpha<em>t \mathbb{I}(f(X)\neq h</em>{t}(X))}<br>        \end{align}<br>$$<br>其中，$e^{-\alpha_t}$ 作为一个常数项可以忽略。$w_t$ 作为权重在计算的时候可以做归一化也可以不做。</p>
+<h1 id="算法流程"><a href="#算法流程" class="headerlink" title="算法流程"></a>算法流程</h1><ol>
+<li>初始化权重 $w_1 = {1 \over N}$</li>
+<li><p>$for \ t = 1:T$</p>
+<blockquote>
+<ul>
+<li>$h<em>t = argmin(\sum</em>{i=1}^{N}w_t^{(i)} \mathbb{I}(f(x_i)\neq h_t(x_i)))$<br>compute error rate: $\epsilon<em>t = {\sum</em>{i=1}^{N}w_t^{(i)} \mathbb{I}(f(x_i)\neq h_t(x<em>i)) \over \sum</em>{i=1}^{N}w_t^{(i)} }$  </li>
+<li>if $\epsilon_t &gt; 0.5$, restart the training</li>
+<li>else:<br> update $\alpha_t$: $\alpha_t = {1\over 2}\ln {1- \epsilon_t \over \epsilon_t}$<br>update $w<em>t$: $w</em>{t+1} = w_t\cdot e^{2\alpha_t \mathbb{I}(f(X)\neq h_t(X))}$</li>
+</ul>
+</blockquote>
+</li>
+<li><p>$H(x) = sign(\sum_{t=1}^T \alpha_th_t(x))$</p>
+</li>
+</ol>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>Boosting方法的intuition还是很好理解的。关键是要把intuition和数学表示之间的关系建立起来。把直觉数学化。$w<em>t = e^{-f(X)H</em>{t-1}(X)}$ 是个很关键的点，它表示了“给那些分错的样本跟多的关注”。周志华和Bishop对样本更新的两种不同的理解角度值得玩味学习。虽然本质上都是对样本权重进行重赋值，周志华理解的是对样本分布的改变，Bishop理解的就是单纯的样本权重。如果是作为一个分布，那么必须满足归一性，而作为权重的话只需要关注相对大小，不必要求归一性了。</p>
+<p>抛开AdaBoost推导的细节，我们还应该关注算法流程，因为算法流程为我们的算法推导提供了指导。首先我们有initial weight $w_1$, 在得到第$t$个弱分类器的时候，我们需要找到分类器权重 $\alpha<em>t$ 来使指数损失函数最小。为了使$t+1$个弱分类器训练出来的时候也能让指数损失最小，我们要对样本reweight。如何找到reweight迭代公式，在推导细节中就体现出来。$w</em>{t+1}$的计算既可以用定义式直接计算，也可以用迭代式。但是显然用迭代式的计算开销要小很多。</p>
+<p>周志华的西瓜书对指数损失函数和分类错误率之间的一致性(consistent)还做出了解释。令指数损失函数对$H(x)$的偏导值为0，求得极小值点。验证这个极小值点也是使分类错误率最小的点。</p>
+
     
 
         <a href="/2017/03/12/adaboost总结/" class="post-more waves-effect waves-button">
             阅读全文...
         </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ML-algo/">ML algo</a></li></ul>
+
     </div>
     
 </article>
@@ -279,8 +333,32 @@
     <div class="post-content" id="post-content" itemprop="postContent">
 
     
-        昨天跟着Mungo的博文实现多电脑终端管理我的github pages博客的时候，边做边记录下来了我遇到的一些问题和解决方案。结果在atom上写的时候忘记save了。直接关掉了atom发现刚刚写的markdown文档大小为0kb。我苍了个天！以后写文档一定定时save！ MD!
-1. 前言用Hexo+github搭建了自己的个人博客以后，有时候需要在多台电脑上更新自己的博客。这里的解决方案是...
+        <p>昨天跟着<a href="http://mungo.space/2015/10/14/create-hexo-on-github-4/" target="_blank" rel="external">Mungo</a>的博文实现多电脑终端管理我的github pages博客的时候，边做边记录下来了我遇到的一些问题和解决方案。结果在atom上写的时候忘记save了。直接关掉了atom发现刚刚写的markdown文档大小为0kb。我苍了个天！<br>以后写文档一定定时save！ MD!</p>
+<h1 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h1><p>用Hexo+github搭建了自己的个人博客以后，有时候需要在多台电脑上更新自己的博客。这里的解决方案是：把github当做hexo博客源代码的云端备份。想在哪台电脑上更新博客的时候直接在github上面拉取源代码下来编辑以后就可以把更新的博客deploy到github服务器。然后把更新的源代码也push到你放hexo博客源代码的repo上去。</p>
+<pre><code>Notes：A电脑表示我最开始搭建hexo博客的电脑，  B电脑是我想在上面对博客进行更新的另外一台电脑。
+</code></pre><h1 id="在A电脑中从本地上传Hexo博客源码到Github仓库"><a href="#在A电脑中从本地上传Hexo博客源码到Github仓库" class="headerlink" title="在A电脑中从本地上传Hexo博客源码到Github仓库"></a>在A电脑中从本地上传Hexo博客源码到Github仓库</h1><p>首先在你的github上面新建一个repository，用来存放你的hexo博客源码。<br>我新建的命名myblog。<br>注意：新建repo的时候不要加README.md文件，不然待会push A电脑上的本地代码上去的时候会有 <code>refusing to merge unrelated histories</code>的报错。</p>
+<h2 id="1-初始化仓库"><a href="#1-初始化仓库" class="headerlink" title="1.初始化仓库"></a>1.初始化仓库</h2><p>在Hexo博客的目录下运行Git Bash并输入以下命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$git init</div><div class="line">$git remote add origin &lt;server address&gt;</div></pre></td></tr></table></figure></p>
+<p>这里<server address="">指的是在线仓库的地址，比如在这里我的就应该是<code>https://github.com/ALiaoSha/myblog.git</code>，如果你用其它git仓库服务，填写对应仓库地址即可。<br>origin是本地分支,remote add会将本地仓库映射到Github仓库。</server></p>
+<h2 id="2-把本地文件同步到Github上面"><a href="#2-把本地文件同步到Github上面" class="headerlink" title="2.把本地文件同步到Github上面"></a>2.把本地文件同步到Github上面</h2><p>分别输入执行以下命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ git add .                      #添加所有目录，注意add后面有个点`.`</div><div class="line">$ git commit -m &quot;add to Github&quot;  #添加提交说明，每次提交都需要</div><div class="line">$ git push -u origin master      #把更新推送到云端</div></pre></td></tr></table></figure></p>
+<p>这时可以登录Github账户查看刚创建的myblog仓库中是否上传成功。</p>
+<p>注意:<br>为了在另一台电脑上配置更加方便，严重建议把Hexo博客目录下_config.yml文件复制粘贴一份，并重命名为hexo_config.yml；把themes目录下你用到主题目录下的_config.yml文件也复制一份，并粘贴到博客根目录，注意，是’博客根目录’，并命名为theme_config.yml。原因是我们push代码的时候，我们自己安装的themes是从别人的github上clone下来的。也就是说你的一个git项目中又包含了一个git项目。那么被包含的那个项目是untracked的，被包含的主题目录并不能上传，所以我们需要把这两个配置文件都保存下来在进行同步工作。</p>
+<h1 id="在B电脑中从Github仓库取回Hexo到本地"><a href="#在B电脑中从Github仓库取回Hexo到本地" class="headerlink" title="在B电脑中从Github仓库取回Hexo到本地"></a>在B电脑中从Github仓库取回Hexo到本地</h1><p>如果你的第二台电脑是没有安装运行hexo所需要的环境的话，第一步先要把环境搭起来：安装好Git和Node.js</p>
+<h2 id="1-把myblog仓库里的文件取回B电脑本地"><a href="#1-把myblog仓库里的文件取回B电脑本地" class="headerlink" title="1.把myblog仓库里的文件取回B电脑本地"></a>1.把myblog仓库里的文件取回B电脑本地</h2><p>安装环境完成后，在新文件夹下运行Git Bash并分别执行以下几条命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ git init</div><div class="line">$ git remote add origin &lt;myblog address&gt;  # 关联github上的myblog仓库</div><div class="line">$ git fetch –all                          # 取回源代码</div><div class="line">$ git merge origin/master                 # 与本地分支合并</div></pre></td></tr></table></figure></p>
+<p>这里<myblog address="">是你刚才新建的Giuhub上myblog仓库的地址。fetch是将仓库中的内容取出来。reset则是不做任何合并（merge）处理，直接把取出的内容保存。<br>运行完merge命令后你会发现文件夹中才会出现刚刚上传的内容。</myblog></p>
+<h2 id="3-配置新的Hexo"><a href="#3-配置新的Hexo" class="headerlink" title="3.配置新的Hexo"></a>3.配置新的Hexo</h2><p>如果是新PC，不要忘记我们本机并没有安装Hexo博客<br>执行下面的指令在B电脑上安装hexo<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ npm install hexo --save</div><div class="line">$ hexo init</div><div class="line">$ npm intall</div></pre></td></tr></table></figure></p>
+<pre><code>Notes: 在B电脑上安装hexo的时候就不需要像在A电脑上面那样要先执行 `$ npm install -g hexo-cli`了
+</code></pre><p>3.记得在第一篇中讲过，新安装的Hexo是没有hexo-deployer-git依赖包的，需要手动安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ npm install hexo-deployer-git --save   # 自动部署依赖包</div><div class="line">$ npm install hexo-math --save           # mathjax渲染依赖包</div></pre></td></tr></table></figure></p>
+<p>5.安装主题，我在上文中提到新安装的主题并不能被上传，所以也需要重新手动安装(以NexT主题为例)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git clone https://github.com/iissnan/hexo-theme-next themes/next</div></pre></td></tr></table></figure>
+<p>这里要注意的是： themes/next 是主题保存目录。<br>我是用<code>$ git submodules add &lt;address&gt;</code>命令安装的主题，本来以后这样就可以把主题代码也push到myblog下面。后来发现push上去的git submodule是重定向到主题作者的repo的。<br>6.我们之前备份的两个配置文件hexo_config.yml和theme_config.yml有用了,hexo_config.yml重命名为_config.yml覆盖根目录下的同名文件，而theme_config.yml也重命名为<em>config.yml覆盖主题目录下的config.yml文件。注意文件名前面的下划线’</em>’。</p>
+<p>7.输入命令<code>$ hexo g</code>和命令<code>$ hexo s</code>，然后在浏览器输入<code>localhost:4000</code>中进行预览。如果没有问题那么我们在B电脑上就配置成功了。</p>
+<h1 id="在B电脑上更新博客"><a href="#在B电脑上更新博客" class="headerlink" title="在B电脑上更新博客"></a>在B电脑上更新博客</h1><p>现在在B电脑上也可以像在A电脑上一样更新博客了，同样是<br><figure class="highlight plain"><figcaption><span>hexo new post "my_new_post"```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">编辑完文章，然后执行`$ hexo generate`和`$ hexo deploy`就可以成功发表了。</div><div class="line">这里`$ hexo deploy`命令是将我们的博客文章发表到我们的Github上的Hexo博客，并不是前文新建的blog仓库，新建的blog仓库用来保存我们的Hexo程序。</div><div class="line"></div><div class="line">把B电脑上的Hexo从本地同步到Github仓库</div><div class="line">当发表完文章，我们还需要把Hexo程序同步到我们Github的blog仓库。执行下面指令：</div></pre></td></tr></table></figure></p>
+<p>$ git add .<br>$ git commit -m “commit from PC_B”<br>$ git push -u origin master<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">成功后，我们再次把hexo博客源代码同步更新到了我们的Github仓库myblog。</div><div class="line">如果再想用A电脑更新我们的博客，只需要在执行添加文章之前先把程序从myblog仓库拉取下来便可。输入命令：</div></pre></td></tr></table></figure></p>
+<p>$ git pull <a href="https://github.com/ALiaoSha/myblog.git" target="_blank" rel="external">https://github.com/ALiaoSha/myblog.git</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">即可完成。</div><div class="line"></div><div class="line"># 注意:</div><div class="line">我们每次更新博客时，为了保持我们每次用到的程序都是最新的。</div><div class="line"></div><div class="line">每次更新博客之前都需要执行</div></pre></td></tr></table></figure></p>
+<p>$ git pull <a href="https://github.com/xxxx/xxx.git保持本地最新；" target="_blank" rel="external">https://github.com/xxxx/xxx.git保持本地最新；</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">每次更新博客之后都需要执行</div></pre></td></tr></table></figure></p>
+<p>$ git add .<br>$ git commit -m “message”<br>$ git push -u origin master<br>```<br>以保持Github仓库程序最新。</p>
+<p>这样，我们就实现了在不同电脑都能对我们的Hexo博客进行维护了。</p>
+
     
 
         <a href="/2017/03/12/多电脑管理更新我的github个人博客/" class="post-more waves-effect waves-button">
@@ -329,8 +407,46 @@
     <div class="post-content" id="post-content" itemprop="postContent">
 
     
-        1. 前言费了两天的劲终于能在自己搭建的博客上写东西了。对于我这个网页前端小白来说，遇到的坑确实不少。Hexo确实简单好用，不过如果想搭建一个界面漂亮的个人博客还是需要花时间折腾一番。这里我会比较详细的梳理我从无到有的搭建我的个人博客的过程，以及记录我踩过了那些坑。
-2. 准备工作hexo是基于node.js的所以你必须在node.js的官网上面下载并安装，这样你才能用npm。我的博客是部署...
+        <h1 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h1><p>费了两天的劲终于能在自己搭建的博客上写东西了。对于我这个网页前端小白来说，遇到的坑确实不少。Hexo确实简单好用，不过如果想搭建一个界面漂亮的个人博客还是需要花时间折腾一番。这里我会比较详细的梳理我从无到有的搭建我的个人博客的过程，以及记录我踩过了那些坑。</p>
+<h1 id="2-准备工作"><a href="#2-准备工作" class="headerlink" title="2. 准备工作"></a>2. 准备工作</h1><p>hexo是基于node.js的所以你必须在node.js的官网上面下载并安装，这样你才能用npm。<br>我的博客是部署在github上面的，所以需要用到git。linux系统一般自带git，比较方便。Win用户需要在git官网下载安装git for windows并安装。顺便再这里推荐一下我使用的atom编辑器。它是github社区发布的一款面向21世纪的潮流编辑器。是基于web的编辑器.</p>
+<h2 id="注册你的github账号"><a href="#注册你的github账号" class="headerlink" title="注册你的github账号"></a>注册你的github账号</h2><p>这个网上很多明确的教程，推荐看一看<a href="http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000" target="_blank" rel="external">廖雪峰的git教程</a><br>依次注册github账号，添加SSH-key, 设置用户名和邮箱，把秘钥添加到github里面就ok。<br>最后验证你的绑定是否成功：<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2017/03/09/Hexo-github搭建个人博客并进行个性化定制/ssh_vrif.PNG" alt="veri_ssh" title="">
+                </div>
+                <div class="image-caption">veri_ssh</div>
+            </figure></p>
+<h2 id="github上新建一个博客repo"><a href="#github上新建一个博客repo" class="headerlink" title="github上新建一个博客repo"></a>github上新建一个博客repo</h2><p>在github上建立你的github page（相当于你要建立的个人博客）需要在你的github里面建立一个存放网站代码的repo，这个repo命名方式有规定。必须以你的github用户名+github.io的形式命名。比如：你的github用户名为abc,那么你的github page repo 要命名为abc.github.io</p>
+<h2 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h2><p>很简单只要一个命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install hexo-cli -g</div></pre></td></tr></table></figure></p>
+<p>hexo就安装成功了。然后就可以搭建你的 网站。</p>
+<ul>
+<li><p>新建一个文件夹，进入文件夹后用命令hexo init初始化。最简洁的是直接指定初始化的目录，hexo会自动生成它。然后cd进去。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ hexo init myblog</div><div class="line">$ cd myblog</div></pre></td></tr></table></figure>
+</li>
+<li><p>安装依赖和插件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="3-开始搭建一个基本的框架"><a href="#3-开始搭建一个基本的框架" class="headerlink" title="3. 开始搭建一个基本的框架"></a>3. 开始搭建一个基本的框架</h1><p>做好准备工作以后就要开始利用hexo生成你的博客了。<br><code>$ hexo g</code>命令帮助你生成静态页面到<code>myblog\public\</code>目录。<br><code>$ hexo s</code>命令启动本地服务，在浏览器打开  <code>localhost:4000</code>可以本地预览生成的博客网页。</p>
+<h1 id="4-定制你的博客界面"><a href="#4-定制你的博客界面" class="headerlink" title="4. 定制你的博客界面"></a>4. 定制你的博客界面</h1><p>在<code>https://hexo.io/themes/</code>上找到你喜欢的主题，点进预览界面以后找到该主题所在的github repo（我用的是<a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank" rel="external">yscoder</a>的<code>indigo</code>主题）。然后到<code>mybolg\themes</code>目录下把这个repo 克隆下来 。接下来我们开始对主题文件进行自定义配置。</p>
+<p>##　1. 配置全局_config.yml<br>全局_config.yml在myblog根目录下面。主要设置的就是<code>theme</code>和<code>deploy</code>选项。<code>theme</code>要设置为你刚才克隆的主题。deploy选项如下设置。repo后面填的是你的github page的地址。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2017/03/09/Hexo-github搭建个人博客并进行个性化定制/deploy_setting.PNG" alt="deploy_setting" title="">
+                </div>
+                <div class="image-caption">deploy_setting</div>
+            </figure>
+<p>##　2. 配置主题_config.yml<br>主题config里面的选项都很直白，相应的修改成你自己的就行。注意，设置头像或者其他图片文件的时候，图片放在<code>themes\indigo\source\img\</code>下。在设置的时候图片文件名大小写一定要对上。我就是因为把png图片的后缀没有写成<code>.PNG</code>查了好久都没查出来是什么问题。</p>
+<p>更详细的设置可以参考<a href="http://ibruce.info/2013/11/22/hexo-your-blog/" target="_blank" rel="external">不如</a>的博客。</p>
+<h1 id="5-解决数学公式的支持问题"><a href="#5-解决数学公式的支持问题" class="headerlink" title="5. 解决数学公式的支持问题"></a>5. 解决数学公式的支持问题</h1><p>由于我用的jSimple主题没有启用mathjax的配置，所以我采用的是安装hexo-math插件的方法,帮助我们渲染latex公式。<br>安装（注意命令一定要加–save）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install hexo-math --save</div></pre></td></tr></table></figure>
+<p>安装时候提示信息可能显示这个插件已经deprecated。没有关系，只要能用就行。<br>设置： 在全局_config.yml文件中添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">plugins:</div><div class="line">    - hexo-math</div></pre></td></tr></table></figure></p>
+<p>然后在你所用的theme主题的_config.yml文件中添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># MathJax Support</div><div class="line">math.mathjax:</div><div class="line">  enable: true</div><div class="line">  per_page: true</div></pre></td></tr></table></figure></p>
+<p>这样就启用了mathjax渲染公式。<br>我在实施了上面步骤之后发现自动部署的插件不能用了，报错为：“hexo ERROR Deployer not found: git” Google之后没发现什么明确的解决方法。我就把hexo-deployer-git也添加到plugins里面成功解决了这个报错。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">plugins:</div><div class="line">    - hexo-math</div><div class="line">    - hexo-deployer-git</div></pre></td></tr></table></figure></p>
+<h1 id="6-使用插件"><a href="#6-使用插件" class="headerlink" title="6. 使用插件"></a>6. 使用插件</h1><p>整个部署过程我就用了hexo-deployer-git和hexo-math两个插件。要想使用其他插件只需要在全局_config.yml文件的plugins下面添加插件名称就够了(当然，前提你先要hexo install)</p>
+<h1 id="7-References"><a href="#7-References" class="headerlink" title="7. References"></a>7. References</h1><p><a href="http://ibruce.info/2013/11/22/hexo-your-blog/" target="_blank" rel="external">hexo你的博客|不如</a><br><a href="http://blog.tangxiaozhu.com/p/45374067/" target="_blank" rel="external">使用 Hexo 搭建博客的深度优化与定制</a><br><a href="http://wangcaiyong.com/2015/06/25/mathjax/" target="_blank" rel="external">在 Jacman使用 Mathjax 输出数学式</a></p>
+
     
 
         <a href="/2017/03/09/Hexo-github搭建个人博客并进行个性化定制/" class="post-more waves-effect waves-button">
@@ -379,9 +495,32 @@
     <div class="post-content" id="post-content" itemprop="postContent">
 
     
-        树模型是机器学习中一类强有力的模型。曾经有个Princeton大学的教授来我校做报告的时候说过，
-“tree model是最保险的模型。当你不知道该用什么模型好的时候，Tree model一定是一个理想的选择。它可能不会是最好，但是一定不会很坏。”
-在这里我想总结一下三种最基本、最常用的决策树模型 ID3，C4.5和CART，因为所做的项目中用到了CART模型，所以想梳理一下，加深对决策树模...
+        <p>树模型是机器学习中一类强有力的模型。曾经有个Princeton大学的教授来我校做报告的时候说过，</p>
+<pre><code>“tree model是最保险的模型。当你不知道该用什么模型好的时候，Tree model一定是一个理想的选择。它可能不会是最好，但是一定不会很坏。”
+</code></pre><p>在这里我想总结一下三种最基本、最常用的决策树模型 ID3，C4.5和CART，因为所做的项目中用到了CART模型，所以想梳理一下，加深对决策树模型的理解。</p>
+<p>决策树模型最核心的intuition就是在树的每一层对数据集进行切分，分成两个子集合，切分的依据就是“使得分开的两类样本在各自的集合中有序度最高（无序度最低）”。这样的切分方式对分类问题来说才是最好的切分。既然要使集合内样本有序度高（也就是样本纯度高），数学上必须引入一个概念来衡量有序程度，那就是<strong>信息熵(Information Entropy)</strong>。这是信息论祖师爷<strong>克劳德 ⋅香农Claude Shannon</strong>提出来的。</p>
+<p>　　熵被用来衡量一个随机变量出现的期望值。熵越大，一个变量的不确定性就越大（也就是可取的值很多），把它搞清楚所需要的信息量也就越大，熵是整个系统的<strong>平均消息量</strong>。 信息熵是信息论中用于度量信息量的一个概念。一个系统越是有序，信息熵就越低；反之，一个系统越是混乱，信息熵就越高。它的计算公式为：</p>
+<p>$$Entropy = H(D)=E[I(D)] = -\sum_i^{n} p_ilog_2(p_i)$$<br>其中，D是样本集合，$I(D)=-log_2p_i$是样本集合的信息量, $p_i$是任意样本属于类i的<em>非零概率</em>。</p>
+<pre><code>“熵越大，说明系统越混乱，携带的信息就越少。熵越小，说明系统越有序，携带的信息就越多。信息的作用就是在于消除不确定性”
+</code></pre><p>（基于此可以证明Gaussian的熵为$H[x] = \frac{1}{2}{1+ln(2\pi\sigma^2)}$）</p>
+<p>这三个模型最根本的区别就是对树枝进行分裂的时候分裂信息（或者说标准）不同。但是都是基于信息熵的。</p>
+<h1 id="ID3"><a href="#ID3" class="headerlink" title="ID3"></a>ID3</h1><p>采用信息增益（Information Gain）作为节点的分裂标准。<br>信息增益在统计学中成为互信息。互信息(mutual Information)是条件概率与后验概率的比值。</p>
+<ul>
+<li>信息增益计算：<br>$$IG(A) = H(D)-H(D|A)$$<br>$$where，H(D|A)=\sum_i \frac{|D_j|}{D}H(D_j)$$<br>A可以看做分类特征，以这个特征对D集合切分的时候就要计算她的IG。条件熵H(D|A)表示的是以A特征切分的时候，样本集D的混乱程度。如果以A特征切分时正好能把D的类别完全分开，那么分开的类别最有序，H(D|A)=0.</li>
+</ul>
+<h1 id="C4-5"><a href="#C4-5" class="headerlink" title="C4.5"></a>C4.5</h1><p>采用信息增益率（Information Gain Ratio）作为节点的分裂标准<br>ID3中用信息增益有一个缺点就是训练样本类别不平衡，倾向选择取值多的属性<br>所以C4.5在以下几个方面进行了改进：</p>
+<ul>
+<li>以信息增益率为标准选择切分属性。</li>
+<li>在树的构造过程中完成剪枝，防止过拟合。</li>
+<li>可以对连续属性离散化处理。</li>
+<li>可以处理不完整数据集</li>
+</ul>
+<p>信息增益率计算公式：<br>$$IGR(A)=\frac{IG(A)}{Split(D|A)}$$</p>
+<h1 id="CART"><a href="#CART" class="headerlink" title="CART"></a>CART</h1><p>采用基尼指数（Gini Index）作为节点的分裂标准<br>CART全称Classification and Regression Tree，所以它既可以做分类也可以做回归。这里主要讲分类。<br>基尼指数定义：</p>
+<p>分类问题中， 假设有K个类，样本属于第k个类的概率为$p_k$,则概率分布的基尼指数为</p>
+<p>$$Gini(p) = \sum_{k=1}^Kp_k(1-p_k)$$</p>
+<p>由定义可以看到，当类别确定性高的的时候基尼系数趋近于0.<br>对于给定样本集合D,其基尼系数为<br>$$Gini(D)=1-\sum_{k=1}^K(\frac{|C_k|}{D})^2$$<br>根据特征A对数据集D切分，得到的基尼指数：<br>$$Gini(D,A)=\frac{|D_1|}{D}Gini(D_1)+\frac{|D_2|}{D}Gini(D_2)$$</p>
+
     
 
         <a href="/2017/03/09/cart/" class="post-more waves-effect waves-button">
@@ -430,8 +569,9 @@
     <div class="post-content" id="post-content" itemprop="postContent">
 
     
-        array 是 numpy 中的一种重要的数据类型。它可以被赋予任意维度，这也是它与numpy matrix不同的地方(np.matrix只能是二维的矩阵)
-numpy array 的存储方式np.array的存储遵循的是维度由后到前的方式.对一个$ m \times n \times k $ 的矩阵, numpy 把它存储为m个 $n\times k$ 维的矩阵，每个 $n\times k...
+        <p>array 是 numpy 中的一种重要的数据类型。它可以被赋予任意维度，这也是它与numpy matrix不同的地方<br>(np.matrix只能是二维的矩阵)</p>
+<h1 id="numpy-array-的存储方式"><a href="#numpy-array-的存储方式" class="headerlink" title="numpy array 的存储方式"></a>numpy array 的存储方式</h1><p>np.array的存储遵循的是维度由后到前的方式.<br>对一个$ m \times n \times k $ 的矩阵, numpy 把它存储为m个 $n\times k$ 维的矩阵，每个 $n\times k$维的矩阵被存为n个k维的向量<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">In [3]: np.arange(60).reshape(3,4,5)</div><div class="line">Out[3]:</div><div class="line">array([[[ 0,  1,  2,  3,  4],</div><div class="line">        [ 5,  6,  7,  8,  9],</div><div class="line">        [10, 11, 12, 13, 14],</div><div class="line">        [15, 16, 17, 18, 19]],</div><div class="line"></div><div class="line">       [[20, 21, 22, 23, 24],</div><div class="line">        [25, 26, 27, 28, 29],</div><div class="line">        [30, 31, 32, 33, 34],</div><div class="line">        [35, 36, 37, 38, 39]],</div><div class="line"></div><div class="line">       [[40, 41, 42, 43, 44],</div><div class="line">        [45, 46, 47, 48, 49],</div><div class="line">        [50, 51, 52, 53, 54],</div><div class="line">        [55, 56, 57, 58, 59]]])</div></pre></td></tr></table></figure></p>
+<h1 id="numpy-array-的读取方式"><a href="#numpy-array-的读取方式" class="headerlink" title="numpy array 的读取方式"></a>numpy array 的读取方式</h1>
     
 
         <a href="/2017/03/08/numpy-array的存储和读读取方式/" class="post-more waves-effect waves-button">
@@ -457,7 +597,7 @@ numpy array 的存储方式np.array的存储遵循的是维度由后到前的方
         <time class="post-time" title="2017年03月08日 12:44" datetime="2017-03-08T04:44:33.000Z"  itemprop="datePublished">2017-03-08</time>
 
         
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/humanity/">人文</a></li></ul>
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/随笔/">随笔</a></li></ul>
 
 
 
@@ -480,8 +620,8 @@ numpy array 的存储方式np.array的存储遵循的是维度由后到前的方
     <div class="post-content" id="post-content" itemprop="postContent">
 
     
-        “人不能一直赶路，有时候也要停下了想一想，一路是怎么走过来的。不要忘记从哪里出发，不要忘记要去哪儿。”
-研究生都读到第四个学期了，行将步入找工作的大军
+        <p>“人不能一直赶路，有时候也要停下了想一想，一路是怎么走过来的。不要忘记从哪里出发，不要忘记要去哪儿。”</p>
+<p>研究生都读到第四个学期了，行将步入找工作的大军</p>
 
     
 
@@ -492,7 +632,7 @@ numpy array 的存储方式np.array的存储遵循的是维度由后到前的方
     
     <div class="post-footer">
         
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/humanity/">humanity</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/感悟总结/">感悟总结</a></li></ul>
 
     </div>
     
