@@ -24,11 +24,11 @@
 集成学习AdaBoost算法是属于集成学习的分类算法。这里有必要介绍一下集成学习。集成学习（Ensemble Learning）的思想类似于“三个臭皮匠赛过诸葛亮”。单个决策者做的决策准确率如果大于50%，那么多个决策者一起参与决策肯定会提高最终">
 <meta property="og:type" content="article">
 <meta property="og:title" content="adaboost总结">
-<meta property="og:url" content="https://aliaosha.github.io/2017/03/12/adaboost总结/index.html">
+<meta property="og:url" content="https://aliaosha.github.io/2017/03/21/adaboost总结/index.html">
 <meta property="og:site_name" content="有趣">
 <meta property="og:description" content="在公司里面用adaboost做了一个量化选股的模型，虽然算法部分是调用sklearn包里面的函数完成的，算法的核心思想还是需要弄个清楚。在这里梳理一下。
 集成学习AdaBoost算法是属于集成学习的分类算法。这里有必要介绍一下集成学习。集成学习（Ensemble Learning）的思想类似于“三个臭皮匠赛过诸葛亮”。单个决策者做的决策准确率如果大于50%，那么多个决策者一起参与决策肯定会提高最终">
-<meta property="og:updated_time" content="2017-03-21T06:27:24.598Z">
+<meta property="og:updated_time" content="2017-03-21T06:48:47.201Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="adaboost总结">
 <meta name="twitter:description" content="在公司里面用adaboost做了一个量化选股的模型，虽然算法部分是调用sklearn包里面的函数完成的，算法的核心思想还是需要弄个清楚。在这里梳理一下。
@@ -148,8 +148,8 @@
         <h1 class="title">adaboost总结</h1>
         <h5 class="subtitle">
             
-                <time datetime="2017-03-12T08:52:28.607Z" itemprop="datePublished" class="page-time">
-  2017-03-12
+                <time datetime="2017-03-21T06:29:51.000Z" itemprop="datePublished" class="page-time">
+  2017-03-21
 </time>
 
 
@@ -179,7 +179,7 @@
     <div class="post-card">
         <h1 class="post-card-title">adaboost总结</h1>
         <div class="post-meta">
-            <time class="post-time" title="2017年03月12日 16:52" datetime="2017-03-12T08:52:28.607Z"  itemprop="datePublished">2017-03-12</time>
+            <time class="post-time" title="2017年03月21日 14:29" datetime="2017-03-21T06:29:51.000Z"  itemprop="datePublished">2017-03-21</time>
 
             
 	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Machine-Learning/">机器学习</a></li></ul>
@@ -232,8 +232,8 @@
 <li><p>$H(x) = sign(\sum_{t=1}^T \alpha_t h_t(x))$</p>
 </li>
 </ol>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>Boosting方法的intuition还是很好理解的。关键是要把intuition和数学表示之间的关系建立起来。把直觉数学化。$ w<em>t = e^{-f(X)H</em>{t-1}(X)} $ 是个很关键的点，它表示了“给那些分错的样本跟多的关注”。周志华和Bishop对样本更新的两种不同的理解角度值得玩味学习。虽然本质上都是对样本权重进行重赋值，周志华理解的是对样本分布的改变，Bishop理解的就是单纯的样本权重。如果是作为一个分布，那么必须满足归一性，而作为权重的话只需要关注相对大小，不必要求归一性了。</p>
-<p>抛开AdaBoost推导的细节，我们还应该关注算法流程，因为算法流程为我们的算法推导提供了指导。首先我们有initial weight $w_1$, 在得到第$t$个弱分类器的时候，我们需要找到分类器权重 $\alpha<em>t$ 来使指数损失函数最小。为了使$t+1$个弱分类器训练出来的时候也能让指数损失最小，我们要对样本reweight。如何找到reweight迭代公式，在推导细节中就体现出来。$w</em>{t+1}$的计算既可以用定义式直接计算，也可以用迭代式。但是显然用迭代式的计算开销要小很多。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>Boosting方法的intuition还是很好理解的。关键是要把intuition和数学表示之间的关系建立起来。把直觉数学化。$w<em>t = e^{-f(X)H</em>{t-1}(X)}$ 是个很关键的点，它表示了“给那些分错的样本跟多的关注”。周志华和Bishop对样本更新的两种不同的理解角度值得玩味学习。虽然本质上都是对样本权重进行重赋值，周志华理解的是对样本分布的改变，Bishop理解的就是单纯的样本权重。如果是作为一个分布，那么必须满足归一性，而作为权重的话只需要关注相对大小，不必要求归一性了。</p>
+<p>抛开AdaBoost推导的细节，我们还应该关注算法流程，因为算法流程为我们的算法推导提供了指导。首先我们有initial weight $w_1$, 在得到第$t$个弱分类器的时候，我们需要找到分类器权重 $\alpha<em>t$ 来使指数损失函数最小。为了使$t+1$ 个弱分类器训练出来的时候也能让指数损失最小，我们要对样本reweight。如何找到reweight迭代公式，在推导细节中就体现出来。 $w</em>{t+1}$ 的计算既可以用定义式直接计算，也可以用迭代式。但是显然用迭代式的计算开销要小很多。</p>
 <p>周志华的西瓜书对指数损失函数和分类错误率之间的一致性(consistent)还做出了解释。令指数损失函数对 $H(x)$ 的偏导值为0，求得极小值点。验证这个极小值点也是使分类错误率最小的点。</p>
 
         </div>
@@ -242,11 +242,11 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2017-03-21T06:27:24.598Z" itemprop="dateUpdated">2017年3月21日 14:27</time>
+    最后更新时间：<time datetime="2017-03-21T06:48:47.201Z" itemprop="dateUpdated">2017年3月21日 14:48</time>
 </span><br>
 
 
-        这里写留言或版权声明：<a href="/2017/03/12/adaboost总结/" target="_blank" rel="external">https://aliaosha.github.io/2017/03/12/adaboost总结/</a>
+        这里写留言或版权声明：<a href="/2017/03/21/adaboost总结/" target="_blank" rel="external">https://aliaosha.github.io/2017/03/21/adaboost总结/</a>
     </div>
     <footer>
         <a href="https://aliaosha.github.io">
@@ -275,7 +275,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://aliaosha.github.io/2017/03/12/adaboost总结/&title=《adaboost总结》 — 有趣&pic=https://aliaosha.github.io/img/touxiang.PNG" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://aliaosha.github.io/2017/03/21/adaboost总结/&title=《adaboost总结》 — 有趣&pic=https://aliaosha.github.io/img/touxiang.PNG" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -285,22 +285,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://aliaosha.github.io/2017/03/12/adaboost总结/&title=《adaboost总结》 — 有趣&source=踩出来的脚印也是宝贵的财富" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://aliaosha.github.io/2017/03/21/adaboost总结/&title=《adaboost总结》 — 有趣&source=踩出来的脚印也是宝贵的财富" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://aliaosha.github.io/2017/03/12/adaboost总结/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://aliaosha.github.io/2017/03/21/adaboost总结/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《adaboost总结》 — 有趣&url=https://aliaosha.github.io/2017/03/12/adaboost总结/&via=https://aliaosha.github.io" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《adaboost总结》 — 有趣&url=https://aliaosha.github.io/2017/03/21/adaboost总结/&via=https://aliaosha.github.io" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://aliaosha.github.io/2017/03/12/adaboost总结/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://aliaosha.github.io/2017/03/21/adaboost总结/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -323,18 +323,18 @@
 <nav class="post-nav flex-row flex-justify-between">
   
     <div class="waves-block waves-effect prev">
-      <a href="/2017/03/12/Hexo博客解决博客里面插入图片的问题/" id="post-prev" class="post-nav-link">
+      <a href="/2017/03/21/adaboost总结/" id="post-prev" class="post-nav-link">
         <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">Hexo博客解决博客里面插入图片的问题</h4>
+        <h4 class="title">adaboost总结</h4>
       </a>
     </div>
   
 
   
     <div class="waves-block waves-effect next">
-      <a href="/2017/03/12/多电脑管理更新我的github个人博客/" id="post-next" class="post-nav-link">
+      <a href="/2017/03/12/Hexo博客解决博客里面插入图片的问题/" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">多电脑管理更新我的github个人博客</h4>
+        <h4 class="title">Hexo博客解决博客里面插入图片的问题</h4>
       </a>
     </div>
   
@@ -424,7 +424,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://aliaosha.github.io/2017/03/12/adaboost总结/&title=《adaboost总结》 — 有趣&pic=https://aliaosha.github.io/img/touxiang.PNG" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://aliaosha.github.io/2017/03/21/adaboost总结/&title=《adaboost总结》 — 有趣&pic=https://aliaosha.github.io/img/touxiang.PNG" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -434,22 +434,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://aliaosha.github.io/2017/03/12/adaboost总结/&title=《adaboost总结》 — 有趣&source=踩出来的脚印也是宝贵的财富" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://aliaosha.github.io/2017/03/21/adaboost总结/&title=《adaboost总结》 — 有趣&source=踩出来的脚印也是宝贵的财富" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://aliaosha.github.io/2017/03/12/adaboost总结/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://aliaosha.github.io/2017/03/21/adaboost总结/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《adaboost总结》 — 有趣&url=https://aliaosha.github.io/2017/03/12/adaboost总结/&via=https://aliaosha.github.io" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《adaboost总结》 — 有趣&url=https://aliaosha.github.io/2017/03/21/adaboost总结/&via=https://aliaosha.github.io" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://aliaosha.github.io/2017/03/12/adaboost总结/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://aliaosha.github.io/2017/03/21/adaboost总结/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -460,7 +460,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://aliaosha.github.io/2017/03/12/adaboost总结/" alt="微信分享二维码">
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://aliaosha.github.io/2017/03/21/adaboost总结/" alt="微信分享二维码">
 </div>
 
 
